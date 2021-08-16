@@ -1,5 +1,5 @@
 # 3D Model Viewer
-This is a simple implementation of a 3D Model viewer with orbit controls using [three.js](https://threejs.org/) and SvelteKit(https://kit.svelte.dev/).
+This is a simple implementation of a 3D Model viewer with orbit controls using [three.js](https://threejs.org/) and [SvelteKit](https://kit.svelte.dev/).
 
 
 ## Developing
