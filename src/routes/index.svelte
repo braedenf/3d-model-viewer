@@ -8,6 +8,8 @@
 	const renderer = new WebGLRenderer({ antialias: true });
 	const windowId = 'threeWindow';
 
+	const modelURL = './models/rustic_chair/scene.gltf';
+
 	//Once dom elements are mounted draw renderwindow to dom element
 	onMount(() => {
 		//Window
@@ -17,12 +19,12 @@
 
 		//Camera
 		const camera = new PerspectiveCamera(
-			45,
-			threeWindow.clientWidth / threeWindow.clientHeight,
-			1,
-			500
+			45, // fov
+			threeWindow.clientWidth / threeWindow.clientHeight, // aspect
+			1, // near
+			500 // far
 		);
-		camera.position.set(0, 0, 10); //Center but back a bit from object
+		camera.position.set(0, 0, 10); // Center but back a bit from object
 
 		//Window Resize
 		window.addEventListener('resize', onWindowResize);
@@ -54,7 +56,7 @@
 
 		// Load 3D model
 		let loader = new GLTFLoader();
-		loader.load('./models/rustic_chair/scene.gltf', function (gltf) {
+		loader.load(modelURL, function (gltf) {
 			let chair = gltf.scene.children[0];
 			chair.scale.set(50, 50, 50);
 			scene.add(gltf.scene);
@@ -72,8 +74,14 @@
 <div class="pt-20 h-screen">
 	<h1 class="px-12 text-4xl font-bold pb-6">Model Viewer</h1>
 
-	<div class="grid grid-cols-2 gap-4 px-12 h-1/2">
-		<div id={windowId} />
+	<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 px-12 h-1/2">
+		<div class="relative" id={windowId}>
+			<a
+				href="intent://arvr.google.com/scene-viewer/1.0?file={modelURL}#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=https://developers.google.com/ar;end;"
+				class="w-10 h-6 rounded bg-gray-800 text-white hover:bg-gray-600 shadow font-bold absolute top-0 right-0 m-3 text- text-center"
+				>AR</a
+			>
+		</div>
 		<div class="flex flex-col space-y-2">
 			<h2 class="text-2xl font-bold">Object Name</h2>
 			<p>Description of object</p>
