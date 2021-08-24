@@ -27,6 +27,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"cloudinary": "^1.26.3",
 		"three": "^0.131.3"
 	}
 }
