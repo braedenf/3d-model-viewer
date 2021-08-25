@@ -1,5 +1,6 @@
 <script>
 	import { Cloudinary } from '@cloudinary/base';
+	import { onMount } from 'svelte';
 
 	const cloudinary = new Cloudinary({
 		cloud: {
@@ -10,42 +11,88 @@
 	let modelType = 'LowBack';
 
 	$: myModel = cloudinary.image(`Carousel_${modelType}_Default`).toURL();
+
+	let isARCompatible;
+
+	onMount(() => {
+		const modelViewer = document.querySelector('model-viewer');
+
+		if (modelViewer.getAttribute('ar-status') == 'not-presenting') {
+			isARCompatible = false;
+		} else {
+			isARCompatible = true;
+		}
+	});
 </script>
 
 <div class="pt-20 h-screen">
 	<h1 class="px-12 text-4xl font-bold pb-6">Model Viewer</h1>
 
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 px-12 lg:h-3/4 h-full">
-		<model-viewer
-			class="relative h-full w-full"
-			src={myModel}
-			alt="A comfy couch"
-			ar
-			ar-modes="webxr scene-viewer quick-look"
-			environment-image="neutral"
-			auto-rotate
-			camera-controls
-			shadow-intensity="2"
-		/>
-
+		<div class="relative">
+			<model-viewer
+				class="relative h-full w-full"
+				src={myModel}
+				alt="A comfy couch"
+				ar
+				ar-modes="webxr scene-viewer quick-look"
+				ar-status
+				environment-image="neutral"
+				auto-rotate
+				camera-controls
+				shadow-intensity="2"
+			/>
+			<!-- Only show QR code AR button if not on a ar compatible device -->
+			{#if !isARCompatible}
+				<button
+					class="rounded-full bg-gray-800 hover:bg-gray-600 w-8 h-8 flex justify-center items-center absolute top-0 right-0 mr-4 mt-4 shadow"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="h-6 w-6 text-gray-300"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"
+						/>
+					</svg>
+				</button>
+			{/if}
+		</div>
+		<!-- <div>
+			<ul>
+				{#each swatchImages as img}
+					<li>
+						<button>
+	
+						</button>
+					</li>
+				{/each}
+			</ul>
+		</div> -->
 		<div class="flex flex-col space-y-2">
 			<span class="mb-4 lg:order-last lg:mt-20">
-				<ul class="flex space-x-6 justify-center">
+				<ul class="flex space-x-3 justify-center">
 					<li>
 						<button
-							class="py-2 px-6 bg-gray-200 hover:bg-gray-400 rounded-lg text-gray-800 font-semibold"
+							class="py-1 text-sm px-6 bg-gray-200 hover:bg-gray-400 rounded-lg text-gray-800 font-semibold"
 							on:click={() => (modelType = 'LowBack')}>Low Back</button
 						>
 					</li>
 					<li>
 						<button
-							class="py-2 px-6 bg-gray-200 hover:bg-gray-400 rounded-lg text-gray-800 font-semibold"
+							class="py-1 text-sm px-6 bg-gray-200 hover:bg-gray-400 rounded-lg text-gray-800 font-semibold"
 							on:click={() => (modelType = 'MedBack')}>Medium Back</button
 						>
 					</li>
 					<li>
 						<button
-							class="py-2 px-6 bg-gray-200 hover:bg-gray-400 rounded-lg text-gray-800 font-semibold"
+							class="py-1 text-sm px-6 bg-gray-200 hover:bg-gray-400 rounded-lg text-gray-800 font-semibold"
 							on:click={() => (modelType = 'HighBack')}>High Back</button
 						>
 					</li>
