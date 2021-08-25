@@ -12,6 +12,10 @@
 
 	$: myModel = cloudinary.image(`Carousel_${modelType}_Default`).toURL();
 
+	function loadTestModel() {
+		myModel = cloudinary.image('Astronaut_Test').toURL();
+	}
+
 	let isARCompatible;
 
 	onMount(() => {
@@ -26,7 +30,14 @@
 </script>
 
 <div class="pt-6 h-screen">
-	<h1 class="px-4 text-3xl lg:text-4xl font-bold pb-3">Model Viewer</h1>
+	<div class="flex justify-between">
+		<h1 class="px-4 text-3xl lg:text-4xl font-bold pb-3">Model Viewer</h1>
+		<button
+			on:click={loadTestModel}
+			class="px-3 m-2 bg-gray-800 hover:bg-gray-600 text-sm text-white font-bold rounded-full"
+			>Load Test model</button
+		>
+	</div>
 
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:px-12 lg:h-3/4 h-full w-full">
 		<div class="relative">
