@@ -15,7 +15,7 @@
 	let isARCompatible;
 
 	onMount(() => {
-		const modelViewer = document.querySelector('model-viewer');
+		const modelViewer = document.querySelector('#model-viewer');
 
 		if (modelViewer.getAttribute('ar-status') == 'not-presenting') {
 			isARCompatible = false;
@@ -25,12 +25,13 @@
 	});
 </script>
 
-<div class="pt-20 h-screen">
-	<h1 class="px-12 text-4xl font-bold pb-6">Model Viewer</h1>
+<div class="pt-6 h-screen">
+	<h1 class="px-4 text-3xl lg:text-4xl font-bold pb-3">Model Viewer</h1>
 
-	<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 px-12 lg:h-3/4 h-full">
+	<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:px-12 lg:h-3/4 h-full w-full">
 		<div class="relative">
 			<model-viewer
+				id="model-viewer"
 				class="relative h-full w-full"
 				src={myModel}
 				alt="A comfy couch"
@@ -45,6 +46,7 @@
 			<!-- Only show QR code AR button if not on a ar compatible device -->
 			{#if !isARCompatible}
 				<button
+					on:click={() => alert('TODO: Add QR Code for AR')}
 					class="rounded-full bg-gray-800 hover:bg-gray-600 w-8 h-8 flex justify-center items-center absolute top-0 right-0 mr-4 mt-4 shadow"
 				>
 					<svg
@@ -64,35 +66,24 @@
 				</button>
 			{/if}
 		</div>
-		<!-- <div>
-			<ul>
-				{#each swatchImages as img}
-					<li>
-						<button>
-	
-						</button>
-					</li>
-				{/each}
-			</ul>
-		</div> -->
-		<div class="flex flex-col space-y-2">
+		<div class="flex flex-col space-y-2 px-4 lg:px-12">
 			<span class="mb-4 lg:order-last lg:mt-20">
-				<ul class="flex space-x-3 justify-center">
+				<ul class="flex space-x-2 justify-center">
 					<li>
 						<button
-							class="py-1 text-sm px-6 bg-gray-200 hover:bg-gray-400 rounded-lg text-gray-800 font-semibold"
+							class="py-1 lg:text-sm px-6 bg-gray-200 hover:bg-gray-400 rounded-lg text-xs text-gray-800 font-semibold"
 							on:click={() => (modelType = 'LowBack')}>Low Back</button
 						>
 					</li>
 					<li>
 						<button
-							class="py-1 text-sm px-6 bg-gray-200 hover:bg-gray-400 rounded-lg text-gray-800 font-semibold"
+							class="py-1 lg:text-sm px-6 bg-gray-200 hover:bg-gray-400 rounded-lg text-xs text-gray-800 font-semibold"
 							on:click={() => (modelType = 'MedBack')}>Medium Back</button
 						>
 					</li>
 					<li>
 						<button
-							class="py-1 text-sm px-6 bg-gray-200 hover:bg-gray-400 rounded-lg text-gray-800 font-semibold"
+							class="py-1 lg:text-sm px-6 bg-gray-200 hover:bg-gray-400 rounded-lg text-xs text-gray-800 font-semibold"
 							on:click={() => (modelType = 'HighBack')}>High Back</button
 						>
 					</li>
