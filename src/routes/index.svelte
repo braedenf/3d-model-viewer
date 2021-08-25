@@ -13,7 +13,8 @@
 	$: myModel = cloudinary.image(`Carousel_${modelType}_Default`).toURL();
 
 	function loadTestModel() {
-		myModel = cloudinary.image('Astronaut_Test').toURL();
+		// myModel = cloudinary.image('Astronaut_Test').toURL();
+		myModel = 'https://res.cloudinary.com/dbfqxpc2p/image/upload/v1629929474/Pier_StoolTall.glb';
 	}
 
 	let isARCompatible;
