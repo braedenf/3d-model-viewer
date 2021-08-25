@@ -25,7 +25,7 @@
 			environment-image="neutral"
 			auto-rotate
 			camera-controls
-			shadow-intensity="1"
+			shadow-intensity="2"
 		/>
 
 		<div class="flex flex-col space-y-2">
