@@ -1,6 +1,7 @@
 <script>
 	import { Cloudinary } from '@cloudinary/base';
 	import { onMount } from 'svelte';
+	import { each } from 'svelte/internal';
 
 	const cloudinary = new Cloudinary({
 		cloud: {
@@ -27,6 +28,26 @@
 		} else {
 			isARCompatible = true;
 		}
+	});
+
+	// load texture swatches
+
+	const textureVariants = [
+		'gloss',
+		'crater',
+		'antler',
+		'bare',
+		'quill',
+		'panda',
+		'kiss',
+		'seaShell'
+	];
+
+	let textureURLS = [];
+
+	textureVariants.forEach((textureVariant) => {
+		let url = cloudinary.image(`Carousel_Swatches/corousel_${textureVariant}`).toURL();
+		textureURLS.push(url);
 	});
 </script>
 
@@ -78,7 +99,7 @@
 				</button>
 			{/if}
 		</div>
-		<div class="flex flex-col space-y-2 px-4 lg:px-12">
+		<div class="flex flex-col space-y-2 px-4 lg:px-12 items-center lg:mt-20">
 			<span class="mb-4 lg:order-last lg:mt-20">
 				<ul class="flex space-x-2 justify-center">
 					<li>
@@ -101,6 +122,16 @@
 					</li>
 				</ul>
 			</span>
+
+			<div class="flex gap-5 flex-wrap lg:order-last justify-items-start">
+				{#each textureURLS as url}
+					<button
+						class="bg-gray-500 shadow-lg h-12 w-12 transform-gpu hover:translate-y-1 ease-in duration-100"
+					>
+						<img src={url} alt="Texture" />
+					</button>
+				{/each}
+			</div>
 
 			<h2 class="text-2xl font-bold">Maharam Meld Antler</h2>
 			<p>
