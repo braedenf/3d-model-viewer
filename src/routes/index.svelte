@@ -72,17 +72,17 @@
 		> -->
 	</div>
 
-	<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:px-12 lg:h-3/4 h-full w-full">
+	<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:px-12 h-screen w-full mt-10">
 		<div class="relative">
 			<model-viewer
 				id="model-viewer"
-				class="relative h-full w-full"
+				class="relative h-80 lg:h-3/4 w-full"
 				src={myModel}
 				alt="A comfy couch"
 				ar
 				ar-modes="webxr scene-viewer quick-look"
 				ar-status
-				environment-image="neutral"
+				environment-image="./whiteroom_512.hdr"
 				auto-rotate
 				camera-controls
 				shadow-intensity="2"
@@ -113,11 +113,11 @@
 		<div class="flex flex-col space-y-12 px-4 lg:px-12 items-center lg:mt-20">
 			<div class="lg:order-last lg:mt-20">
 				<span class="mb-4">
-					<ul class="flex space-x-2 justify-center">
+					<ul class="flex lg:space-x-8 space-x-2 justify-center">
 						{#each modelTypes as mt, i}
 							<li>
 								<button
-									class="py-1 lg:text-sm px-6 bg-gray-200 hover:bg-gray-400 rounded-lg text-xs text-gray-800 font-semibold {selectedModelType ==
+									class="py-1 lg:text-sm px-3 bg-gray-200 hover:bg-gray-400 rounded-lg text-xs text-gray-800 font-semibold {selectedModelType ==
 									i
 										? 'border-2 border-gray-700'
 										: 'border-none'}"
