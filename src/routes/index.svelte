@@ -81,7 +81,7 @@
 				ar
 				ar-modes="webxr scene-viewer quick-look"
 				ar-status
-				environment-image="./whiteroom_512_offset-100.hdr"
+				environment-image="./whiteroom_512_offset100.hdr"
 				auto-rotate
 				camera-controls
 				shadow-intensity="2"
