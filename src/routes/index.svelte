@@ -84,7 +84,7 @@
 				environment-image="./whiteroom_512_offset100.hdr"
 				auto-rotate
 				camera-controls
-				shadow-intensity="2"
+				shadow-intensity="1"
 				exposure="2"
 			/>
 			<!-- Only show QR code AR button if not on a ar compatible device -->
