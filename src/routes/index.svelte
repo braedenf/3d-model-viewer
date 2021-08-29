@@ -9,14 +9,36 @@
 		}
 	});
 
-	let modelType = 'LowBack';
+	const textureVariants = [
+		'gloss',
+		'crater',
+		'antler',
+		'bare',
+		'quill',
+		'panda',
+		'kiss',
+		'seaShell'
+	];
 
-	$: myModel = cloudinary.image(`Carousel_${modelType}_MaharamMeld-Panda`).toURL();
+	const modelTypes = ['LowBack', 'MedBack', 'HighBack'];
 
-	function loadTestModel() {
-		// myModel = cloudinary.image('Astronaut_Test').toURL();
-		myModel = 'https://res.cloudinary.com/dbfqxpc2p/image/upload/v1629929474/Pier_StoolTall.glb';
+	let selectedModelType = 0;
+	let modelType = modelTypes[selectedModelType];
+
+	let selectedMaterial = 0;
+	let modelMaterial = textureVariants[selectedMaterial];
+
+	function updatedSelectedModelType(i) {
+		selectedModelType = i;
+		modelType = modelTypes[i];
 	}
+
+	function updateSelectedMaterial(index) {
+		selectedMaterial = index;
+		modelMaterial = textureVariants[selectedMaterial];
+	}
+
+	$: myModel = cloudinary.image(`Carousel_${modelType}_MaharamMeld-${modelMaterial}`).toURL();
 
 	let isARCompatible;
 
@@ -32,17 +54,6 @@
 
 	// load texture swatches
 
-	const textureVariants = [
-		'gloss',
-		'crater',
-		'antler',
-		'bare',
-		'quill',
-		'panda',
-		'kiss',
-		'seaShell'
-	];
-
 	let textureURLS = [];
 
 	textureVariants.forEach((textureVariant) => {
@@ -54,11 +65,11 @@
 <div class="pt-6 h-screen">
 	<div class="flex justify-between">
 		<h1 class="px-4 text-3xl lg:text-4xl font-bold pb-3">Model Viewer</h1>
-		<button
+		<!-- <button
 			on:click={loadTestModel}
 			class="px-3 m-2 bg-gray-800 hover:bg-gray-600 text-sm text-white font-bold rounded-full"
 			>Load Test model</button
-		>
+		> -->
 	</div>
 
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:px-12 lg:h-3/4 h-full w-full">
@@ -99,46 +110,52 @@
 				</button>
 			{/if}
 		</div>
-		<div class="flex flex-col space-y-2 px-4 lg:px-12 items-center lg:mt-20">
-			<span class="mb-4 lg:order-last lg:mt-20">
-				<ul class="flex space-x-2 justify-center">
-					<li>
-						<button
-							class="py-1 lg:text-sm px-6 bg-gray-200 hover:bg-gray-400 rounded-lg text-xs text-gray-800 font-semibold"
-							on:click={() => (modelType = 'LowBack')}>Low Back</button
-						>
-					</li>
-					<li>
-						<button
-							class="py-1 lg:text-sm px-6 bg-gray-200 hover:bg-gray-400 rounded-lg text-xs text-gray-800 font-semibold"
-							on:click={() => (modelType = 'MedBack')}>Medium Back</button
-						>
-					</li>
-					<li>
-						<button
-							class="py-1 lg:text-sm px-6 bg-gray-200 hover:bg-gray-400 rounded-lg text-xs text-gray-800 font-semibold"
-							on:click={() => (modelType = 'HighBack')}>High Back</button
-						>
-					</li>
-				</ul>
-			</span>
+		<div class="flex flex-col space-y-12 px-4 lg:px-12 items-center lg:mt-20">
+			<div class="lg:order-last lg:mt-20">
+				<span class="mb-4">
+					<ul class="flex space-x-2 justify-center">
+						{#each modelTypes as mt, i}
+							<li>
+								<button
+									class="py-1 lg:text-sm px-6 bg-gray-200 hover:bg-gray-400 rounded-lg text-xs text-gray-800 font-semibold {selectedModelType ==
+									i
+										? 'border-2 border-gray-700'
+										: 'border-none'}"
+									on:click={() => updatedSelectedModelType(i)}
+									>{mt == modelTypes[0]
+										? 'Low Back'
+										: mt == modelTypes[1]
+										? 'Medium Back'
+										: 'High Back'}</button
+								>
+							</li>
+						{/each}
+					</ul>
+				</span>
 
-			<div class="flex gap-5 flex-wrap lg:order-last justify-items-start">
-				{#each textureURLS as url}
-					<button
-						class="bg-gray-500 shadow-lg h-12 w-12 transform-gpu hover:translate-y-1 ease-in duration-100"
-					>
-						<img src={url} alt="Texture" />
-					</button>
-				{/each}
+				<div class="flex flex-wrap lg:order-last justify-items-start">
+					{#each textureURLS as url, i}
+						<button
+							on:click={() => updateSelectedMaterial(i)}
+							class="bg-gray-500 shadow-lg h-12 w-12 transform-gpu hover:translate-y-1 ease-in duration-100 mr-4 mt-4 {selectedMaterial ==
+							i
+								? 'border-2 border-gray-900'
+								: 'border-none'}"
+						>
+							<img src={url} alt="Texture" />
+						</button>
+					{/each}
+				</div>
 			</div>
 
-			<h2 class="text-2xl font-bold">Maharam Meld Antler</h2>
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus magni enim accusamus tenetur
-				saepe ducimus, blanditiis alias animi fuga quas vitae consectetur obcaecati inventore! Iusto
-				autem nemo eius libero molestias?
-			</p>
+			<div>
+				<h2 class="text-2xl font-bold">Maharam Meld Antler</h2>
+				<p>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus magni enim accusamus
+					tenetur saepe ducimus, blanditiis alias animi fuga quas vitae consectetur obcaecati
+					inventore! Iusto autem nemo eius libero molestias?
+				</p>
+			</div>
 		</div>
 	</div>
 </div>
