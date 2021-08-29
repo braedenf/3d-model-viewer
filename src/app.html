@@ -9,8 +9,6 @@
 	<body>
 		<div id="svelte">%svelte.body%</div>
 	</body>
-	<script
-		type="module"
-		src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
-	></script>
+	<!-- Loads <model-viewer> on modern browsers: -->
+	<script type="module" src="../../node_modules/@google/model-viewer/dist/model-viewer.js"></script>
 </html>

@@ -1,7 +1,6 @@
 <script>
 	import { Cloudinary } from '@cloudinary/base';
 	import { onMount } from 'svelte';
-	import { each } from 'svelte/internal';
 
 	const cloudinary = new Cloudinary({
 		cloud: {
@@ -82,10 +81,11 @@
 				ar
 				ar-modes="webxr scene-viewer quick-look"
 				ar-status
-				environment-image="./whiteroom_512.hdr"
+				environment-image="./whiteroom_512_offset-100.hdr"
 				auto-rotate
 				camera-controls
 				shadow-intensity="2"
+				exposure="2"
 			/>
 			<!-- Only show QR code AR button if not on a ar compatible device -->
 			{#if !isARCompatible}
