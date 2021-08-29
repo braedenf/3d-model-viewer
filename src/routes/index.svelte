@@ -11,7 +11,7 @@
 
 	let modelType = 'LowBack';
 
-	$: myModel = cloudinary.image(`Carousel_${modelType}_MaharamMeld-Antler`).toURL();
+	$: myModel = cloudinary.image(`Carousel_${modelType}_MaharamMeld-Panda`).toURL();
 
 	function loadTestModel() {
 		// myModel = cloudinary.image('Astronaut_Test').toURL();
