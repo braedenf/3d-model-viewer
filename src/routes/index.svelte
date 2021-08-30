@@ -37,12 +37,14 @@
 		modelMaterial = textureVariants[selectedMaterial];
 	}
 
+	let modelViewer;
+
 	$: myModel = cloudinary.image(`Carousel_${modelType}_MaharamMeld-${modelMaterial}`).toURL();
 
 	let isARCompatible;
 
 	onMount(() => {
-		const modelViewer = document.querySelector('#model-viewer');
+		modelViewer = document.querySelector('#model-viewer');
 
 		if (modelViewer.getAttribute('ar-status') == 'not-presenting') {
 			isARCompatible = false;
@@ -77,6 +79,7 @@
 				id="model-viewer"
 				class="relative h-80 lg:h-3/4 w-full"
 				src={myModel}
+				loading="eager"
 				alt="A comfy couch"
 				ar
 				ar-modes="webxr scene-viewer quick-look"
@@ -84,7 +87,7 @@
 				environment-image="./whiteroom_512_offset100.hdr"
 				auto-rotate
 				camera-controls
-				shadow-intensity="1"
+				shadow-intensity="2"
 				exposure="2"
 			/>
 			<!-- Only show QR code AR button if not on a ar compatible device -->
