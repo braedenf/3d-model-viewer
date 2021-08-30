@@ -63,101 +63,92 @@
 	});
 </script>
 
-<div class="pt-6 h-screen">
-	<div class="flex justify-between shadow-lg">
-		<h1 class="px-4 text-3xl lg:text-4xl font-headline text-primary pb-3">Model Viewer</h1>
-		<!-- <button
-			on:click={loadTestModel}
-			class="px-3 m-2 bg-gray-800 hover:bg-gray-600 text-sm text-white font-bold rounded-full"
-			>Load Test model</button
-		> -->
-	</div>
-
-	<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:px-12 h-screen w-full mt-10">
-		<div class="relative">
-			<model-viewer
-				id="model-viewer"
-				class="relative h-[700px] lg:h-3/4 w-full"
-				src={myModel}
-				loading="eager"
-				alt="A comfy couch"
-				ar
-				ar-modes="webxr scene-viewer quick-look"
-				ar-status
-				environment-image="./whiteroom_512_offset100.hdr"
-				auto-rotate
-				camera-controls
-				shadow-intensity="2"
-				exposure="2"
-			/>
-			<!-- Only show QR code AR button if not on a ar compatible device -->
-			{#if !isARCompatible}
-				<button
-					on:click={() => alert('TODO: Add QR Code for AR')}
-					class="rounded-full bg-gray-800 hover:bg-gray-600 w-8 h-8 flex justify-center items-center absolute top-0 right-0 mr-4 mt-4 shadow"
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:px-12 h-screen w-full mt-10">
+	<div class="relative">
+		<model-viewer
+			id="model-viewer"
+			class="relative h-[700px] lg:h-3/4 w-full"
+			src={myModel}
+			loading="eager"
+			alt="A comfy couch"
+			ar
+			ar-modes="webxr scene-viewer quick-look"
+			ar-status
+			environment-image="./whiteroom_512_offset100.hdr"
+			auto-rotate
+			camera-controls
+			shadow-intensity="2"
+			exposure="2"
+		/>
+		<!-- Only show QR code AR button if not on a ar compatible device -->
+		{#if !isARCompatible}
+			<button
+				on:click={() => alert('TODO: Add QR Code for AR')}
+				class="rounded-full bg-gray-800 hover:bg-gray-600 w-8 h-8 flex justify-center items-center absolute top-0 right-0 mr-4 mt-4 shadow"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="h-6 w-6 text-gray-300"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke="currentColor"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-6 w-6 text-gray-300"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"
-						/>
-					</svg>
-				</button>
-			{/if}
-		</div>
-		<div class="flex flex-col space-y-12 px-4 lg:px-12 items-center lg:mt-20">
-			<div class="lg:order-last lg:mt-20">
-				<span class="mb-4">
-					<ul class="flex lg:space-x-8 space-x-2 justify-center">
-						{#each modelTypes as mt, i}
-							<li>
-								<button
-									class="btn btn-sm btn-primary lg:btn-md font-paragraph {selectedModelType == i
-										? 'border-2 border-gray-700'
-										: 'border-none'}"
-									on:click={() => updatedSelectedModelType(i)}
-									>{mt == modelTypes[0]
-										? 'Low Back'
-										: mt == modelTypes[1]
-										? 'Medium Back'
-										: 'High Back'}</button
-								>
-							</li>
-						{/each}
-					</ul>
-				</span>
-
-				<div class="flex flex-wrap lg:order-last justify-items-start mx-10 sm:mx-4 lg:mx-2">
-					{#each textureURLS as url, i}
-						<button
-							on:click={() => updateSelectedMaterial(i)}
-							class="shadow-lg h-12 w-12 transform-gpu hover:translate-y-1 ease-in duration-100 mr-4 mt-4 {selectedMaterial ==
-							i
-								? 'border-2 border-gray-900'
-								: 'border-none'}"
-						>
-							<img src={url} alt="Texture" />
-						</button>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"
+					/>
+				</svg>
+			</button>
+		{/if}
+	</div>
+	<div class="flex flex-col space-y-12 px-4 lg:px-12 items-center lg:mt-20">
+		<div class="lg:order-last lg:mt-20">
+			<span class="mb-4">
+				<ul class="flex lg:space-x-8 space-x-2 justify-center">
+					{#each modelTypes as mt, i}
+						<li>
+							<button
+								class="px-6 py-2 text-sm truncate transition duration-200 ease-in-out hover:text-primary-focus shadow-lg content-center font-headline {selectedModelType ==
+								i
+									? 'border-4 border-primary-focus'
+									: 'border-none'}"
+								on:click={() => updatedSelectedModelType(i)}
+								>{mt == modelTypes[0]
+									? 'Low Back'
+									: mt == modelTypes[1]
+									? 'Medium Back'
+									: 'High Back'}</button
+							>
+						</li>
 					{/each}
-				</div>
-			</div>
+				</ul>
+			</span>
 
-			<div class="prose mx-10 font-paragraph sm:mx-4 lg:mx-2">
-				<h2>Maharam Meld Antler</h2>
-				<p>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus magni enim accusamus
-					tenetur saepe ducimus, blanditiis alias animi fuga quas vitae consectetur obcaecati
-					inventore! Iusto autem nemo eius libero molestias?
-				</p>
+			<div class="flex flex-wrap lg:order-last justify-items-start mx-10 sm:mx-4 lg:mx-2">
+				{#each textureURLS as url, i}
+					<button
+						on:click={() => updateSelectedMaterial(i)}
+						class="shadow-lg h-14 w-14 transform-gpu hover:translate-y-1 ease-in duration-100 mr-4 mt-4 {selectedMaterial ==
+						i
+							? 'border-4 border-primary-focus'
+							: 'border-none'}"
+					>
+						<img src={url} alt="Texture" />
+					</button>
+				{/each}
 			</div>
+		</div>
+
+		<div class="prose mx-10 font-paragraph sm:mx-4 lg:mx-2">
+			<h2>Maharam Meld Antler</h2>
+			<p>
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus magni enim accusamus tenetur
+				saepe ducimus, blanditiis alias animi fuga quas vitae consectetur obcaecati inventore! Iusto
+				autem nemo eius libero molestias?
+			</p>
+			<div class="py-20" />
 		</div>
 	</div>
 </div>
