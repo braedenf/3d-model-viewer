@@ -1,12 +1,14 @@
 const config = {
-	mode: "jit",
-	purge: [
-		"./src/**/*.{html,js,svelte,ts}",
-	],
+	mode: 'jit',
+	purge: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
-		extend: {},
+		fontFamily: {
+			headline: ['Sora', 'Helvetica', 'sans-serif'],
+			paragraph: ['Nunito Sans', 'Helvetica', 'sans-serif']
+		},
+		extend: {}
 	},
-	plugins: [],
+	plugins: [require('daisyui'), require('@tailwindcss/typography')]
 };
 
 module.exports = config;

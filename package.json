@@ -26,6 +26,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@cloudinary/base": "^1.0.0-beta.4"
+		"@cloudinary/base": "^1.0.0-beta.4",
+		"@tailwindcss/typography": "^0.4.1",
+		"daisyui": "^1.14.0"
 	}
 }

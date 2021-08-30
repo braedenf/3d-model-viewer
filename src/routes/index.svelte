@@ -64,8 +64,8 @@
 </script>
 
 <div class="pt-6 h-screen">
-	<div class="flex justify-between">
-		<h1 class="px-4 text-3xl lg:text-4xl font-bold pb-3">Model Viewer</h1>
+	<div class="flex justify-between shadow-lg">
+		<h1 class="px-4 text-3xl lg:text-4xl font-headline text-primary pb-3">Model Viewer</h1>
 		<!-- <button
 			on:click={loadTestModel}
 			class="px-3 m-2 bg-gray-800 hover:bg-gray-600 text-sm text-white font-bold rounded-full"
@@ -77,7 +77,7 @@
 		<div class="relative">
 			<model-viewer
 				id="model-viewer"
-				class="relative h-80 lg:h-3/4 w-full"
+				class="relative h-[700px] lg:h-3/4 w-full"
 				src={myModel}
 				loading="eager"
 				alt="A comfy couch"
@@ -120,8 +120,7 @@
 						{#each modelTypes as mt, i}
 							<li>
 								<button
-									class="py-1 lg:text-sm px-3 bg-gray-200 hover:bg-gray-400 rounded-lg text-xs text-gray-800 font-semibold {selectedModelType ==
-									i
+									class="btn btn-sm btn-primary lg:btn-md font-paragraph {selectedModelType == i
 										? 'border-2 border-gray-700'
 										: 'border-none'}"
 									on:click={() => updatedSelectedModelType(i)}
@@ -136,11 +135,11 @@
 					</ul>
 				</span>
 
-				<div class="flex flex-wrap lg:order-last justify-items-start">
+				<div class="flex flex-wrap lg:order-last justify-items-start mx-10 sm:mx-4 lg:mx-2">
 					{#each textureURLS as url, i}
 						<button
 							on:click={() => updateSelectedMaterial(i)}
-							class="bg-gray-500 shadow-lg h-12 w-12 transform-gpu hover:translate-y-1 ease-in duration-100 mr-4 mt-4 {selectedMaterial ==
+							class="shadow-lg h-12 w-12 transform-gpu hover:translate-y-1 ease-in duration-100 mr-4 mt-4 {selectedMaterial ==
 							i
 								? 'border-2 border-gray-900'
 								: 'border-none'}"
@@ -151,8 +150,8 @@
 				</div>
 			</div>
 
-			<div>
-				<h2 class="text-2xl font-bold">Maharam Meld Antler</h2>
+			<div class="prose mx-10 font-paragraph sm:mx-4 lg:mx-2">
+				<h2>Maharam Meld Antler</h2>
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus magni enim accusamus
 					tenetur saepe ducimus, blanditiis alias animi fuga quas vitae consectetur obcaecati
