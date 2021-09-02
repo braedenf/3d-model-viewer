@@ -19,17 +19,17 @@
 		'seaShell'
 	];
 
-	const modelTypes = ['LowBack', 'MedBack', 'HighBack'];
+	const modelTypes = ['Low Back', 'Med Back', 'High Back'];
 
 	let selectedModelType = 0;
-	let modelType = modelTypes[selectedModelType];
+	let modelType = modelTypes[selectedModelType].replace(/\s+/g, '');
 
 	let selectedMaterial = 0;
 	let modelMaterial = textureVariants[selectedMaterial];
 
 	function updatedSelectedModelType(i) {
 		selectedModelType = i;
-		modelType = modelTypes[i];
+		modelType = modelTypes[i].replace(/\s+/g, '');
 	}
 
 	function updateSelectedMaterial(index) {
@@ -67,14 +67,14 @@
 	<div class="relative">
 		<model-viewer
 			id="model-viewer"
-			class="relative h-[700px] lg:h-3/4 w-full"
+			class="relative h-[500px] lg:h-3/4 w-full"
 			src={myModel}
 			loading="eager"
 			alt="A comfy couch"
 			ar
 			ar-modes="webxr scene-viewer quick-look"
 			ar-status
-			environment-image="./whiteroom_512_offset100.hdr"
+			environment-image="./whiteroom2Windows_512.hdr"
 			auto-rotate
 			camera-controls
 			shadow-intensity="2"
@@ -103,52 +103,66 @@
 			</button>
 		{/if}
 	</div>
-	<div class="flex flex-col space-y-12 px-4 lg:px-12 items-center lg:mt-20">
-		<div class="lg:order-last lg:mt-20">
-			<span class="mb-4">
-				<ul class="flex lg:space-x-8 space-x-2 justify-center">
-					{#each modelTypes as mt, i}
-						<li>
-							<button
-								class="px-6 py-2 text-sm truncate transition duration-200 ease-in-out hover:text-primary-focus shadow-lg content-center font-headline {selectedModelType ==
-								i
-									? 'border-4 border-primary-focus'
-									: 'border-none'}"
-								on:click={() => updatedSelectedModelType(i)}
-								>{mt == modelTypes[0]
-									? 'Low Back'
-									: mt == modelTypes[1]
-									? 'Medium Back'
-									: 'High Back'}</button
+	<div class="mx-10">
+		<div class="flex flex-col space-y-10 lg:px-12 lg:mt-20 items-center lg:items-start">
+			<div class="lg:order-last w-full">
+				<h5 class="text-2xl font-headline mb-2 text-primary">Fabric:</h5>
+				<div class="dropdown rounded-lg">
+					<div tabindex="0" class="btn btn-wide btn-ghost shadow-lg">
+						<div class="flex justify-between w-full items-center">
+							<h6>
+								{modelTypes[selectedModelType]}
+							</h6>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="h-8 w-8"
+								viewBox="0 0 20 20"
+								fill="currentColor"
 							>
-						</li>
-					{/each}
-				</ul>
-			</span>
-
-			<div class="flex flex-wrap lg:order-last justify-items-start mx-10 sm:mx-4 lg:mx-2">
-				{#each textureURLS as url, i}
-					<button
-						on:click={() => updateSelectedMaterial(i)}
-						class="shadow-lg h-14 w-14 transform-gpu hover:translate-y-1 ease-in duration-100 mr-4 mt-4 {selectedMaterial ==
-						i
-							? 'border-4 border-primary-focus'
-							: 'border-none'}"
-					>
-						<img src={url} alt="Texture" />
-					</button>
-				{/each}
+								<path
+									fill-rule="evenodd"
+									d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+									clip-rule="evenodd"
+								/>
+							</svg>
+						</div>
+					</div>
+					<ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52">
+						{#each modelTypes as mt, i}
+							<li>
+								<button class="btn btn-ghost" on:click={() => updatedSelectedModelType(i)}
+									>{modelTypes[i]}</button
+								>
+							</li>
+						{/each}
+					</ul>
+				</div>
 			</div>
-		</div>
+			<div class="lg:order-last lg:mt-20">
+				<div class="flex flex-wrap lg:order-last mr-4 items-center">
+					{#each textureURLS as url, i}
+						<button
+							on:click={() => updateSelectedMaterial(i)}
+							class="mx-2 shadow-lg h-14 w-14 transform-gpu hover:translate-y-1 ease-in duration-100 mt-4 {selectedMaterial ==
+							i
+								? 'border-4 border-primary-focus'
+								: 'border-none'}"
+						>
+							<img src={url} alt="Texture" />
+						</button>
+					{/each}
+				</div>
+			</div>
 
-		<div class="prose mx-10 font-paragraph sm:mx-4 lg:mx-2">
-			<h2>Maharam Meld Antler</h2>
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus magni enim accusamus tenetur
-				saepe ducimus, blanditiis alias animi fuga quas vitae consectetur obcaecati inventore! Iusto
-				autem nemo eius libero molestias?
-			</p>
-			<div class="py-20" />
+			<div class="prose font-paragraph sm:mx-4 lg:mx-2">
+				<h2>Maharam Meld Antler</h2>
+				<p>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus magni enim accusamus
+					tenetur saepe ducimus, blanditiis alias animi fuga quas vitae consectetur obcaecati
+					inventore! Iusto autem nemo eius libero molestias?
+				</p>
+				<div class="py-12" />
+			</div>
 		</div>
 	</div>
 </div>
