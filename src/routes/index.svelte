@@ -1,6 +1,24 @@
+<script context="module">
+	export async function load({ fetch }) {
+		const productData = await (await fetch('/products.json')).json();
+
+		return {
+			props: {
+				productData
+			}
+		};
+	}
+</script>
+
 <script>
 	import { Cloudinary } from '@cloudinary/base';
 	import { onMount } from 'svelte';
+
+	/* 
+		Product Data is loaded from a local endpoint in json format
+	*/
+	export let productData;
+	let products = productData.products;
 
 	const cloudinary = new Cloudinary({
 		cloud: {
@@ -8,41 +26,50 @@
 		}
 	});
 
-	const textureVariants = [
-		'gloss',
-		'crater',
-		'antler',
-		'bare',
-		'quill',
-		'panda',
-		'kiss',
-		'seaShell'
-	];
+	/* 
+		Selected model and selected model type for loading in from cloudinary dynamically
+	*/
+	let selectedModel = 0; // This is the product that gets loaded from cloudinary
 
-	const modelTypes = ['Low Back', 'Med Back', 'High Back'];
+	let selectedModelType = 0; // This is the product variant
 
-	let selectedModelType = 0;
-	let modelType = modelTypes[selectedModelType].replace(/\s+/g, '');
+	let selectedMaterial = 0; // This is the material
 
-	let selectedMaterial = 0;
-	let modelMaterial = textureVariants[selectedMaterial];
+	let modelMaterial = products[selectedModel].materials[selectedMaterial];
 
 	function updatedSelectedModelType(i) {
 		selectedModelType = i;
-		modelType = modelTypes[i].replace(/\s+/g, '');
 	}
 
 	function updateSelectedMaterial(index) {
 		selectedMaterial = index;
-		modelMaterial = textureVariants[selectedMaterial];
+		modelMaterial = products[selectedModel].materials[selectedMaterial];
+	}
+
+	function changeProduct(i) {
+		selectedModel = i;
+		selectedModelType = 0;
+		selectedMaterial = 0;
+		modelMaterial = products[selectedModel].materials[selectedMaterial];
 	}
 
 	let modelViewer;
 
-	$: myModel = cloudinary.image(`Carousel_${modelType}_MaharamMeld-${modelMaterial}`).toURL();
+	/* 
+		Update the model to load reactivly when any of the customisation options change
+	*/
+
+	$: loadedModel = cloudinary
+		.image(
+			`${products[selectedModel].name}/${products[selectedModel].variants[selectedModelType]}/${products[selectedModel].name}_${products[selectedModel].variants[selectedModelType]}_${modelMaterial}`
+		)
+		.toURL();
 
 	let isARCompatible;
 
+	/* 
+		Load the model-viewer web-component onMount
+	*/
 	onMount(() => {
 		modelViewer = document.querySelector('#model-viewer');
 
@@ -52,15 +79,6 @@
 			isARCompatible = true;
 		}
 	});
-
-	// load texture swatches
-
-	let textureURLS = [];
-
-	textureVariants.forEach((textureVariant) => {
-		let url = cloudinary.image(`Carousel_Swatches/corousel_${textureVariant}`).toURL();
-		textureURLS.push(url);
-	});
 </script>
 
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:px-12 h-screen w-full mt-10">
@@ -68,17 +86,18 @@
 		<model-viewer
 			id="model-viewer"
 			class="relative h-[500px] lg:h-3/4 w-full"
-			src={myModel}
+			src={loadedModel}
 			loading="eager"
 			alt="A comfy couch"
 			ar
 			ar-modes="webxr scene-viewer quick-look"
 			ar-status
 			environment-image="./whiteroom2Windows_512.hdr"
+			exposure="0"
 			auto-rotate
 			camera-controls
+			yaw="20deg"
 			shadow-intensity="2"
-			exposure="2"
 		/>
 		<!-- Only show QR code AR button if not on a ar compatible device -->
 		{#if !isARCompatible}
@@ -103,15 +122,27 @@
 			</button>
 		{/if}
 	</div>
+	<div class="flex flex-wrap space-x-2 lg:order-last mr-4 items-center mb-10">
+		{#each products as product, i}
+			<div class="flex flex-col content-center">
+				<button on:click={() => changeProduct(i)} class="p-6 bg-gray-400">
+					<img src={`${loadedModel}.png`} alt={product.name} />
+				</button>
+				<h6 class="text-sm">{product.name}</h6>
+			</div>
+		{/each}
+	</div>
 	<div class="mx-10">
 		<div class="flex flex-col space-y-10 lg:px-12 lg:mt-20 items-center lg:items-start">
 			<div class="lg:order-last w-full">
-				<h5 class="text-2xl font-headline mb-2 text-primary">Fabric:</h5>
+				<h5 class="text-2xl font-headline mb-2 text-primary">Type:</h5>
 				<div class="dropdown rounded-lg">
 					<div tabindex="0" class="btn btn-wide btn-ghost shadow-lg">
 						<div class="flex justify-between w-full items-center">
 							<h6>
-								{modelTypes[selectedModelType]}
+								{products[selectedModel].variants[selectedModelType]
+									.replace(/([A-Z])/g, ' $1')
+									.trim()}
 							</h6>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -128,10 +159,10 @@
 						</div>
 					</div>
 					<ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52">
-						{#each modelTypes as mt, i}
+						{#each products[selectedModel].variants as modelVariant, i}
 							<li>
 								<button class="btn btn-ghost" on:click={() => updatedSelectedModelType(i)}
-									>{modelTypes[i]}</button
+									>{modelVariant.replace(/([A-Z])/g, ' $1').trim()}</button
 								>
 							</li>
 						{/each}
@@ -139,23 +170,31 @@
 				</div>
 			</div>
 			<div class="lg:order-last lg:mt-20">
+				<h5 class="text-2xl font-headline mb-2 text-primary">Material:</h5>
 				<div class="flex flex-wrap lg:order-last mr-4 items-center">
-					{#each textureURLS as url, i}
+					{#each products[selectedModel].materials as _, i}
 						<button
 							on:click={() => updateSelectedMaterial(i)}
 							class="mx-2 shadow-lg h-14 w-14 transform-gpu hover:translate-y-1 ease-in duration-100 mt-4 {selectedMaterial ==
 							i
-								? 'border-4 border-primary-focus'
+								? 'border-4 border-primary'
 								: 'border-none'}"
 						>
-							<img src={url} alt="Texture" />
+							<img
+								src={cloudinary
+									.image(
+										`${products[selectedModel].name}/swatches/${products[selectedModel].materials[i]}`
+									)
+									.toURL()}
+								alt={products[selectedModel].materials[i]}
+							/>
 						</button>
 					{/each}
 				</div>
 			</div>
 
 			<div class="prose font-paragraph sm:mx-4 lg:mx-2">
-				<h2>Maharam Meld Antler</h2>
+				<h2>{products[selectedModel].name}</h2>
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus magni enim accusamus
 					tenetur saepe ducimus, blanditiis alias animi fuga quas vitae consectetur obcaecati
