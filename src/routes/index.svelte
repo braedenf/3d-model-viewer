@@ -11,7 +11,7 @@
 </script>
 
 <script>
-	import { Cloudinary } from '@cloudinary/base';
+	import { Cloudinary } from '@cloudinary/url-gen';
 	import { onMount } from 'svelte';
 
 	/* 
@@ -41,8 +41,8 @@
 		selectedModelType = i;
 	}
 
-	function updateSelectedMaterial(index) {
-		selectedMaterial = index;
+	function updateSelectedMaterial(i) {
+		selectedMaterial = i;
 		modelMaterial = products[selectedModel].materials[selectedMaterial];
 	}
 
@@ -62,6 +62,12 @@
 	$: loadedModel = cloudinary
 		.image(
 			`${products[selectedModel].name}/${products[selectedModel].variants[selectedModelType]}/${products[selectedModel].name}_${products[selectedModel].variants[selectedModelType]}_${modelMaterial}`
+		)
+		.toURL();
+
+	$: loadedPoster = cloudinary
+		.image(
+			`${products[selectedModel].name}/${products[selectedModel].variants[selectedModelType]}/${products[selectedModel].name}_${products[selectedModel].variants[selectedModelType]}_${modelMaterial}.png`
 		)
 		.toURL();
 
@@ -86,8 +92,9 @@
 		<model-viewer
 			id="model-viewer"
 			class="relative h-[500px] lg:h-3/4 w-full"
+			poster={loadedPoster}
 			src={loadedModel}
-			loading="eager"
+			loading="auto"
 			alt="A comfy couch"
 			ar
 			ar-modes="webxr scene-viewer quick-look"
@@ -122,18 +129,25 @@
 			</button>
 		{/if}
 	</div>
-	<div class="flex flex-wrap space-x-2 lg:order-last mr-4 items-center mb-10">
+	<div class="flex flex-wrap space-x-2 lg:order-last mr-4 items-center mb-10 mx-10">
 		{#each products as product, i}
-			<div class="flex flex-col content-center">
-				<button on:click={() => changeProduct(i)} class="p-6 bg-gray-400">
-					<img src={`${loadedModel}.png`} alt={product.name} />
+			<div class="flex flex-col space-y-2 content-center text-center">
+				<button on:click={() => changeProduct(i)} class=" bg-gray-200 w-32 h-32">
+					<img
+						src={cloudinary
+							.image(
+								`${product.name}/${product.variants[0]}/${product.name}_${product.variants[0]}_${product.materials[0]}.png`
+							)
+							.toURL()}
+						alt={product.name}
+					/>
 				</button>
-				<h6 class="text-sm">{product.name}</h6>
+				<h6 class="text-sm font-semibold">{product.name.replace(/([A-Z])/g, ' $1').trim()}</h6>
 			</div>
 		{/each}
 	</div>
 	<div class="mx-10">
-		<div class="flex flex-col space-y-10 lg:px-12 lg:mt-20 items-center lg:items-start">
+		<div class="flex flex-col space-y-10 lg:px-12 lg:mt-20 lg:items-start">
 			<div class="lg:order-last w-full">
 				<h5 class="text-2xl font-headline mb-2 text-primary">Type:</h5>
 				<div class="dropdown rounded-lg">
