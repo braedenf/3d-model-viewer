@@ -91,7 +91,7 @@
 	<div class="relative">
 		<model-viewer
 			id="model-viewer"
-			class="relative h-[500px] lg:h-3/4 w-full"
+			class="relative h-[500px] lg:h-3/4 w-full bg-gray-200"
 			poster={loadedPoster}
 			src={loadedModel}
 			loading="auto"
