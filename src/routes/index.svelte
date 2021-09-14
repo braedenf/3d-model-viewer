@@ -13,6 +13,7 @@
 <script>
 	import { Cloudinary } from '@cloudinary/url-gen';
 	import { onMount } from 'svelte';
+	import { panSkybox } from '$lib/pan-skybox';
 
 	/* 
 		Product Data is loaded from a local endpoint in json format
@@ -77,8 +78,6 @@
 		Load the model-viewer web-component onMount
 	*/
 	onMount(() => {
-		modelViewer = document.querySelector('#model-viewer');
-
 		if (modelViewer.getAttribute('ar-status') == 'not-presenting') {
 			isARCompatible = false;
 		} else {
@@ -90,7 +89,8 @@
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:px-12 h-screen w-full mt-10">
 	<div class="relative">
 		<model-viewer
-			id="model-viewer"
+			bind:this={modelViewer}
+			use:panSkybox
 			class="relative h-[500px] lg:h-3/4 w-full bg-gray-200"
 			poster={loadedPoster}
 			src={loadedModel}
@@ -100,7 +100,7 @@
 			ar-modes="webxr scene-viewer quick-look"
 			ar-status
 			environment-image="./whiteroom2Windows_512.hdr"
-			exposure="0"
+			exposure="2"
 			auto-rotate
 			camera-controls
 			yaw="20deg"
