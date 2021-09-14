@@ -54,7 +54,24 @@
 		modelMaterial = products[selectedModel].materials[selectedMaterial];
 	}
 
-	let modelViewer;
+	let modelViewer; // Model viewer gets bound to model-viewer web component
+
+	let isARCompatible; // Gets the ar-status and presents alt button if not available
+
+	/* 
+		Wait for modelViewer to be mounted
+	*/
+
+	onMount(() => {
+		if (modelViewer.getAttribute('ar-status') == 'not-presenting') {
+			isARCompatible = false;
+		} else {
+			isARCompatible = true;
+		}
+
+		// For some reason I need to crank the exposure here???
+		modelViewer.exposure = 1.8;
+	});
 
 	/* 
 		Update the model to load reactivly when any of the customisation options change
@@ -71,19 +88,6 @@
 			`${products[selectedModel].name}/${products[selectedModel].variants[selectedModelType]}/${products[selectedModel].name}_${products[selectedModel].variants[selectedModelType]}_${modelMaterial}.png`
 		)
 		.toURL();
-
-	let isARCompatible;
-
-	/* 
-		Load the model-viewer web-component onMount
-	*/
-	onMount(() => {
-		if (modelViewer.getAttribute('ar-status') == 'not-presenting') {
-			isARCompatible = false;
-		} else {
-			isARCompatible = true;
-		}
-	});
 </script>
 
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:px-12 h-screen w-full mt-10">
@@ -100,7 +104,7 @@
 			ar-modes="webxr scene-viewer quick-look"
 			ar-status
 			environment-image="./whiteroom2Windows_512.hdr"
-			exposure="2"
+			exposure="1"
 			auto-rotate
 			camera-controls
 			yaw="20deg"
@@ -147,7 +151,7 @@
 		{/each}
 	</div>
 	<div class="mx-10">
-		<div class="flex flex-col space-y-10 lg:px-12 lg:mt-20 lg:items-start">
+		<div class="flex flex-col space-y-10 lg:px-12 lg:items-start">
 			<div class="lg:order-last w-full">
 				<h5 class="text-2xl font-headline mb-2 text-primary">Type:</h5>
 				<div class="dropdown rounded-lg">
@@ -208,7 +212,7 @@
 			</div>
 
 			<div class="prose font-paragraph sm:mx-4 lg:mx-2">
-				<h2>{products[selectedModel].name}</h2>
+				<h2>{products[selectedModel].name.replace(/([A-Z])/g, ' $1').trim()}</h2>
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus magni enim accusamus
 					tenetur saepe ducimus, blanditiis alias animi fuga quas vitae consectetur obcaecati
