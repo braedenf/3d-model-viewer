@@ -14,8 +14,8 @@
 	import { Cloudinary } from '@cloudinary/url-gen';
 	import { onMount } from 'svelte';
 	import { panSkybox } from '$lib/pan-skybox';
-	// import QrCode from '$lib/qrcode.svelte';
-	// import Modal from '$lib/modal.svelte';
+	import QrCode from '$lib/qrcode.svelte';
+	import Modal from '$lib/modal.svelte';
 
 	/* 
 		Product Data is loaded from a local endpoint in json format
@@ -96,7 +96,7 @@
 		.toURL();
 </script>
 
-<!-- {#if qrModalOpen}
+{#if qrModalOpen}
 	<Modal>
 		<h3 class="text-2xl text-center pt-3 font-headline">Scan to view in AR</h3>
 		<div class="w-full flex justify-center p-6">
@@ -114,7 +114,7 @@
 			</button>
 		</div>
 	</Modal>
-{/if} -->
+{/if}
 
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:px-12 w-full mt-10 lg:mt-20">
 	<div class="relative">
