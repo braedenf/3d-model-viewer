@@ -26,7 +26,8 @@
 		"prettier-plugin-svelte": "^2.2.0",
 		"svelte": "^3.34.0",
 		"svelte-preprocess": "^4.7.4",
-		"tailwindcss": "^2.2.4"
+		"tailwindcss": "^2.2.4",
+		"easyqrcodejs": "^4.4.6"
 	},
 	"type": "module",
 	"dependencies": {}
