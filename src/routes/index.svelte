@@ -51,6 +51,8 @@
 		selectedModelType = 0;
 		selectedMaterial = 0;
 		modelMaterial = products[selectedModel].materials[selectedMaterial];
+
+		changeCameraOrbit();
 	}
 
 	// Adds spaces between capital letters
@@ -59,6 +61,7 @@
 	}
 
 	let modelViewer; // Model viewer gets bound to model-viewer web component
+	let cameraOrbit;
 
 	/* 
 		Wait for modelViewer to be mounted
@@ -68,15 +71,18 @@
 
 	onMount(() => {
 		// For some reason I need to crank the exposure here???
-		modelViewer.exposure = 1.8;
+		modelViewer.exposure = 3;
+
 		// Gets the ar-status and presents alt button if not available
-		if (modelViewer.getAttribute('ar-status') == 'not-presenting') {
-			isARAvailable = false;
-			console.log(modelViewer.getAttribute('ar-status'));
-		} else {
-			isARAvailable = true;
-			console.log(modelViewer.getAttribute('ar-status'));
+		if (modelViewer) {
+			if (modelViewer.getAttribute('ar-status') == 'not-presenting') {
+				isARAvailable = false;
+			} else {
+				isARAvailable = true;
+			}
 		}
+
+		changeCameraOrbit();
 	});
 
 	/* 
@@ -94,6 +100,16 @@
 			`${products[selectedModel].name}/${products[selectedModel].variants[selectedModelType]}/${products[selectedModel].name}_${products[selectedModel].variants[selectedModelType]}_${modelMaterial}.png`
 		)
 		.toURL();
+
+	function changeCameraOrbit() {
+		if (modelViewer) {
+			if (products[selectedModel].type == 'seat') {
+				modelViewer.setAttribute('camera-orbit', '-45deg 80deg 3m');
+			} else if (products[selectedModel].type == 'light') {
+				modelViewer.setAttribute('camera-orbit', '-45deg 180deg 1.0m');
+			}
+		}
+	}
 </script>
 
 {#if qrModalOpen}
@@ -133,6 +149,7 @@
 			exposure="2"
 			auto-rotate
 			camera-controls
+			interpolation-decay="200"
 			shadow-intensity="2"
 		/>
 		<!-- Only show QR code AR button if not on a ar compatible device -->
