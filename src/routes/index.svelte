@@ -138,9 +138,7 @@
 		<!-- Only show QR code AR button if not on a ar compatible device -->
 		<button
 			on:click={() => (qrModalOpen = true)}
-			class="rounded-full bg-gray-800 hover:bg-gray-600 w-8 h-8 flex justify-center items-center absolute top-0 right-0 mr-4 mt-4 shadow {isARAvailable
-				? 'hidden'
-				: ''}"
+			class="rounded-full bg-gray-800 hover:bg-gray-600 w-8 h-8 flex justify-center items-center absolute top-0 right-0 mr-4 mt-4 shadow"
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

@@ -1,6 +1,5 @@
 <script>
 	import { onMount } from 'svelte';
-	import * as QRCode from 'easyqrcodejs';
 
 	export let text;
 	let node;
