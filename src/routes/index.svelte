@@ -14,8 +14,8 @@
 	import { Cloudinary } from '@cloudinary/url-gen';
 	import { onMount } from 'svelte';
 	import { panSkybox } from '$lib/pan-skybox';
-	import QrCode from '$lib/QRCode.svelte';
-	import Modal from '$lib/Modal.svelte';
+	import QrCode from '$lib/qrcode.svelte';
+	import Modal from '$lib/modal.svelte';
 
 	/* 
 		Product Data is loaded from a local endpoint in json format
