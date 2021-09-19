@@ -132,12 +132,12 @@
 	</Modal>
 {/if}
 
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:px-12 w-full mt-10 lg:mt-20">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:px-12 w-full lg:mt-20">
 	<div class="relative">
 		<model-viewer
 			bind:this={modelViewer}
 			use:panSkybox
-			class="relative h-[40em] lg:h-full w-full bg-gray-200"
+			class="relative h-[30em] lg:h-full w-full bg-gray-200"
 			poster={loadedPoster}
 			src={loadedModel}
 			loading="auto"
