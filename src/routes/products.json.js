@@ -23,6 +23,12 @@ export async function get() {
 					name: 'HexPendant',
 					variants: ['500', '750', '1000'],
 					materials: ['Aluminium', 'Black', 'Brass', 'White']
+				},
+				{
+					type: 'seat',
+					name: 'Parallel',
+					variants: ['Standard'],
+					materials: ['Base']
 				}
 			]
 		}
