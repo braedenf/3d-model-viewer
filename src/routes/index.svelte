@@ -132,7 +132,7 @@
 	</Modal>
 {/if}
 
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:px-12 w-full lg:mt-20">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:px-12 w-full lg:mt-24">
 	<div class="relative">
 		<model-viewer
 			bind:this={modelViewer}
