@@ -52,7 +52,7 @@
 		selectedMaterial = 0;
 		modelMaterial = products[selectedModel].materials[selectedMaterial];
 
-		changeCameraOrbit();
+		// changeCameraOrbit();
 	}
 
 	// Adds spaces between capital letters
@@ -82,7 +82,7 @@
 			}
 		}
 
-		changeCameraOrbit();
+		// changeCameraOrbit();
 	});
 
 	/* 
@@ -104,7 +104,7 @@
 	function changeCameraOrbit() {
 		if (modelViewer) {
 			if (products[selectedModel].type == 'seat') {
-				modelViewer.setAttribute('camera-orbit', '-45deg 80deg 3m');
+				modelViewer.setAttribute('camera-orbit', '-45deg 75deg 3m');
 			} else if (products[selectedModel].type == 'light') {
 				modelViewer.setAttribute('camera-orbit', '-45deg 180deg 1.0m');
 			}
@@ -147,11 +147,14 @@
 			ar-status
 			environment-image="https://res.cloudinary.com/residentnz/raw/upload/v1643421221/Resident/HDR/christmas_photo_studio_05_1k_topLightDots.hdr"
 			exposure="1"
-			auto-rotate
 			camera-controls
+			camera-orbit="-30deg 80deg 7m"
 			interpolation-decay="200"
-			shadow-intensity="2"
+			shadow-intensity="1"
 			interaction-prompt="none"
+			field-of-view="20deg"
+			min-field-of-view="20deg"
+			max-field-of-view="20deg"
 		/>
 		<!-- Only show QR code AR button if not on a ar compatible device -->
 		<button
@@ -175,7 +178,7 @@
 		</button>
 	</div>
 
-	<div class="flex flex-wrap space-x-2 lg:order-last mr-4 items-center mb-10 mx-10">
+	<div class="flex flex-wrap gap-2 lg:order-last mr-4 items-center mb-10 mx-10">
 		{#each products as product, i}
 			<div class="flex flex-col space-y-2 content-center text-center">
 				<button on:click={() => changeProduct(i)} class=" bg-gray-200 w-32 h-32">

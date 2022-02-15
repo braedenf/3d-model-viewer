@@ -7,7 +7,7 @@ export async function get() {
 					type: 'seat',
 					name: 'KashmirChair',
 					variants: ['Hallingdale65ByKvadrat_0190'],
-					materials: ['Black']
+					materials: ['Black', '0110']
 				},
 				{
 					type: 'seat',
