@@ -5,6 +5,12 @@ export async function get() {
 			products: [
 				{
 					type: 'seat',
+					name: 'KashmirChair',
+					variants: ['Hallingdale65ByKvadrat_0190'],
+					materials: ['Black']
+				},
+				{
+					type: 'seat',
 					name: 'Carousel',
 					variants: ['HighBack', 'MedBack', 'LowBack'],
 					materials: [

@@ -71,7 +71,7 @@
 
 	onMount(() => {
 		// For some reason I need to crank the exposure here???
-		modelViewer.exposure = 3;
+		// modelViewer.exposure = 3;
 
 		// Gets the ar-status and presents alt button if not available
 		if (modelViewer) {
@@ -145,12 +145,13 @@
 			ar
 			ar-modes="webxr scene-viewer quick-look"
 			ar-status
-			environment-image="./whiteroom2Windows_512.hdr"
-			exposure="2"
+			environment-image="https://res.cloudinary.com/residentnz/raw/upload/v1643421221/Resident/HDR/christmas_photo_studio_05_1k_topLightDots.hdr"
+			exposure="1"
 			auto-rotate
 			camera-controls
 			interpolation-decay="200"
 			shadow-intensity="2"
+			interaction-prompt="none"
 		/>
 		<!-- Only show QR code AR button if not on a ar compatible device -->
 		<button
