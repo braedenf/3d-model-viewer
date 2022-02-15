@@ -71,7 +71,7 @@
 
 	onMount(() => {
 		// For some reason I need to crank the exposure here???
-		// modelViewer.exposure = 3;
+		modelViewer.exposure = 0.5;
 
 		// Gets the ar-status and presents alt button if not available
 		if (modelViewer) {
