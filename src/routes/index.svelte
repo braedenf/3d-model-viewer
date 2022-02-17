@@ -160,7 +160,6 @@
 		>
 			<button
 				slot="ar-button"
-				on:click={() => (qrModalOpen = true)}
 				class="w-8 h-8 flex justify-center items-center absolute top-0 right-0 mr-4 mt-4"
 			>
 				<img src="/ARicon.png" alt="AR icon" />
