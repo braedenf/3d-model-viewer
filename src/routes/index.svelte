@@ -96,6 +96,8 @@
 				isARAvailable = true;
 			}
 		}
+
+		console.log(modelViewer.getAttribute('ar-status'));
 	}
 </script>
 
@@ -156,9 +158,12 @@
 			min-field-of-view="20deg"
 			max-field-of-view="20deg"
 		>
-			<!-- Custom AR Button -->
-			<button slot="ar-button">
-				<img src="/ARicon" alt="AR Icon" />
+			<button
+				slot="ar-button"
+				on:click={() => (qrModalOpen = true)}
+				class="w-8 h-8 flex justify-center items-center absolute top-0 right-0 mr-4 mt-4"
+			>
+				<img src="/ARicon.png" alt="AR icon" />
 			</button>
 		</model-viewer>
 		<!-- Only show QR code AR button if not on a ar compatible device -->
