@@ -160,7 +160,7 @@
 		>
 			<button
 				slot="ar-button"
-				class="w-8 h-8 flex justify-center items-center absolute top-0 right-0 mr-4 mt-4"
+				class="w-8 h-8 flex justify-center items-center absolute bottom-0 right-0 mb-4 mr-4"
 			>
 				<img src="/ARicon.png" alt="AR icon" />
 			</button>
@@ -169,7 +169,7 @@
 		{#if !isARAvailable}
 			<button
 				on:click={() => (qrModalOpen = true)}
-				class="w-8 h-8 flex justify-center items-center absolute top-0 right-0 mr-4 mt-4"
+				class="w-8 h-8 flex justify-center items-center absolute top-0 right-0 mt-4 mr-4"
 			>
 				<img src="/ARicon.png" alt="AR icon" />
 			</button>
