@@ -12,7 +12,6 @@
 
 <script>
 	import { Cloudinary } from '@cloudinary/url-gen';
-	import { onMount } from 'svelte';
 	import { panSkybox } from '$lib/pan-skybox';
 	import QrCode from '$lib/qrcode.svelte';
 	import Modal from '$lib/modal.svelte';
@@ -69,22 +68,6 @@
 	let isARAvailable;
 	let qrModalOpen = false;
 
-	onMount(() => {
-		// For some reason I need to crank the exposure here???
-		modelViewer.exposure = 0.5;
-
-		// Gets the ar-status and presents alt button if not available
-		if (modelViewer) {
-			if (modelViewer.getAttribute('ar-status') == 'not-presenting') {
-				isARAvailable = false;
-			} else {
-				isARAvailable = true;
-			}
-		}
-
-		// changeCameraOrbit();
-	});
-
 	/* 
 		Update the model to load reactivly when any of the customisation options change
 	*/
@@ -101,12 +84,16 @@
 		)
 		.toURL();
 
-	function changeCameraOrbit() {
+	function setupModelViewer() {
+		// For some reason I need to crank the exposure here???
+		modelViewer.exposure = 0.5;
+
+		// Gets the ar-status and presents alt button if not available
 		if (modelViewer) {
-			if (products[selectedModel].type == 'seat') {
-				modelViewer.setAttribute('camera-orbit', '-45deg 75deg 3m');
-			} else if (products[selectedModel].type == 'light') {
-				modelViewer.setAttribute('camera-orbit', '-45deg 180deg 1.0m');
+			if (modelViewer.getAttribute('ar-status') == 'not-presenting') {
+				isARAvailable = false;
+			} else {
+				isARAvailable = true;
 			}
 		}
 	}
@@ -135,6 +122,7 @@
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:px-12 w-full lg:mt-24">
 	<div class="relative">
 		<model-viewer
+			on:load={setupModelViewer}
 			bind:this={modelViewer}
 			use:panSkybox
 			class="relative h-[30em] lg:h-full w-full bg-gray-200"
@@ -146,36 +134,42 @@
 			ar-modes="webxr scene-viewer quick-look"
 			ar-status
 			environment-image="https://res.cloudinary.com/residentnz/raw/upload/v1643421221/Resident/HDR/christmas_photo_studio_05_1k_topLightDots.hdr"
+			bounds="tight"
 			exposure="1"
 			camera-controls
-			camera-orbit="-30deg 80deg 7m"
+			camera-orbit={products[selectedModel].type == 'seat' ? '0 60deg 7m' : '0 120deg 3m'}
+			min-camera-orbit={products[selectedModel].type == 'seat'
+				? // Seat
+				  'auto 40deg auto'
+				: // Light
+				  'auto 80deg auto'}
+			max-camera-orbit={products[selectedModel].type == 'seat'
+				? // Seat
+				  'auto 80deg auto'
+				: // Light
+				  'auto 120deg auto'}
+			camera-target={products[selectedModel].type == 'seat' ? '' : 'auto 1.65m auto'}
 			interpolation-decay="200"
 			shadow-intensity="1"
 			interaction-prompt="none"
 			field-of-view="20deg"
 			min-field-of-view="20deg"
 			max-field-of-view="20deg"
-		/>
-		<!-- Only show QR code AR button if not on a ar compatible device -->
-		<button
-			on:click={() => (qrModalOpen = true)}
-			class="rounded-full bg-gray-800 hover:bg-gray-600 w-8 h-8 flex justify-center items-center absolute top-0 right-0 mr-4 mt-4 shadow"
 		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="h-6 w-6 text-gray-300"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
+			<!-- Custom AR Button -->
+			<button slot="ar-button">
+				<img src="/ARicon" alt="AR Icon" />
+			</button>
+		</model-viewer>
+		<!-- Only show QR code AR button if not on a ar compatible device -->
+		{#if !isARAvailable}
+			<button
+				on:click={() => (qrModalOpen = true)}
+				class="w-8 h-8 flex justify-center items-center absolute top-0 right-0 mr-4 mt-4"
 			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"
-				/>
-			</svg>
-		</button>
+				<img src="/ARicon.png" alt="AR icon" />
+			</button>
+		{/if}
 	</div>
 
 	<div class="flex flex-wrap gap-2 lg:order-last mr-4 items-center mb-10 mx-10">
@@ -232,24 +226,28 @@
 			</div>
 			<div class="lg:order-last lg:mt-20">
 				<h5 class="text-2xl font-headline mb-2 text-primary">Material:</h5>
-				<div class="flex flex-wrap gap-2 lg:order-last items-center">
-					{#each products[selectedModel].materials as _, i}
-						<button
-							on:click={() => updateSelectedMaterial(i)}
-							class="shadow-lg h-14 w-14 transform-gpu hover:translate-y-1 ease-in duration-100 mt-4 {selectedMaterial ==
-							i
-								? 'border-4 border-primary'
-								: 'border-none'}"
-						>
-							<img
-								src={cloudinary
-									.image(
-										`${products[selectedModel].name}/swatches/${products[selectedModel].materials[i]}`
-									)
-									.toURL()}
-								alt={products[selectedModel].materials[i]}
-							/>
-						</button>
+				<div class="flex flex-wrap gap-4 lg:order-last items-center">
+					{#each products[selectedModel].materials as material, i}
+						<div class="flex flex-col justify-center mx-1 gap-1">
+							<button
+								on:click={() => updateSelectedMaterial(i)}
+								class="shadow-lg h-14 w-14 mx-auto transform-gpu hover:translate-y-1 ease-in duration-100 mt-4 {selectedMaterial ==
+								i
+									? 'border-4 border-primary'
+									: 'border-none'}"
+							>
+								<img
+									id="material"
+									src={cloudinary
+										.image(
+											`${products[selectedModel].name}/swatches/${products[selectedModel].materials[i]}`
+										)
+										.toURL()}
+									alt={products[selectedModel].materials[i]}
+								/>
+							</button>
+							<label class="text-sm font-paragraph text-center" for="material">{material}</label>
+						</div>
 					{/each}
 				</div>
 			</div>
