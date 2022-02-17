@@ -89,12 +89,11 @@
 		modelViewer.exposure = 0.5;
 
 		// Gets the ar-status and presents alt button if not available
-		if (modelViewer) {
-			if (modelViewer.getAttribute('ar-status') == 'not-presenting') {
-				isARAvailable = false;
-			} else {
-				isARAvailable = true;
-			}
+
+		if (modelViewer.getAttribute('ar-status') == 'not-presenting') {
+			isARAvailable = false;
+		} else {
+			isARAvailable = true;
 		}
 
 		console.log(modelViewer.getAttribute('ar-status'));
