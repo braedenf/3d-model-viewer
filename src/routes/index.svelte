@@ -138,24 +138,24 @@
 			bounds="tight"
 			exposure="1"
 			camera-controls
-			camera-orbit={products[selectedModel].type == 'seat' ? '0 60deg 7m' : '0 120deg 3m'}
+			camera-orbit={products[selectedModel].type == 'seat' ? '-40deg 82deg 12m' : '0 105deg 3m'}
 			min-camera-orbit={products[selectedModel].type == 'seat'
 				? // Seat
-				  'auto 40deg auto'
+				  'auto 5deg auto'
 				: // Light
 				  'auto 80deg auto'}
 			max-camera-orbit={products[selectedModel].type == 'seat'
 				? // Seat
-				  'auto 80deg auto'
+				  'auto 90deg auto'
 				: // Light
-				  'auto 120deg auto'}
+				  'auto 180deg auto'}
 			camera-target={products[selectedModel].type == 'seat' ? '' : 'auto 1.65m auto'}
 			interpolation-decay="200"
 			shadow-intensity="1"
 			interaction-prompt="none"
-			field-of-view="20deg"
-			min-field-of-view="20deg"
-			max-field-of-view="20deg"
+			field-of-view="10deg"
+			min-field-of-view="10deg"
+			max-field-of-view="10deg"
 		>
 			<button
 				slot="ar-button"

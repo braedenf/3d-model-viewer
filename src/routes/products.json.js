@@ -19,7 +19,7 @@ export async function get() {
 					type: 'light',
 					name: 'HexPendant',
 					variants: ['500', '750', '1000'],
-					materials: ['Aluminium', 'Black', 'Brass', 'White']
+					materials: ['BrushedAluminium', 'Black', 'BrushedBrass', 'White']
 				}
 				// {
 				// 	type: 'seat',
