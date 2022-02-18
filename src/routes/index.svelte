@@ -90,13 +90,13 @@
 
 		// Gets the ar-status and presents alt button if not available
 
-		if (modelViewer.getAttribute('ar-status') == 'not-presenting') {
-			isARAvailable = false;
-		} else {
+		if (modelViewer.canActivateAR) {
 			isARAvailable = true;
+		} else {
+			isARAvailable = false;
 		}
 
-		console.log(modelViewer.getAttribute('ar-status'));
+		console.log(modelViewer.canActivateAR);
 	}
 </script>
 
