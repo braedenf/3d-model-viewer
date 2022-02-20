@@ -85,7 +85,7 @@
 
 	function setupModelViewer() {
 		// For some reason I need to crank the exposure here???
-		modelViewer.exposure = 0.5;
+		modelViewer.exposure = 0.7;
 
 		// Gets the ar-status and presents alt button if not available
 
@@ -150,7 +150,7 @@
 				? // Seat
 				  'auto 94deg auto'
 				: // Light
-				  'auto 180deg auto'}
+				  'auto 160deg auto'}
 			camera-target={products[selectedModel].type == 'seat' ? '' : 'auto 1.65m auto'}
 			interpolation-decay="200"
 			shadow-intensity="1"
