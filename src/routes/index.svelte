@@ -60,7 +60,6 @@
 	}
 
 	let modelViewer; // Model viewer gets bound to model-viewer web component
-	let cameraOrbit;
 
 	/* 
 		Wait for modelViewer to be mounted
@@ -134,6 +133,9 @@
 			ar
 			ar-modes="webxr scene-viewer quick-look"
 			ar-status
+			auto-rotate
+			rotation-per-second="1deg"
+			interaction-prompt="none"
 			environment-image="https://res.cloudinary.com/residentnz/raw/upload/v1643421221/Resident/HDR/christmas_photo_studio_05_1k_topLightDots.hdr"
 			bounds="tight"
 			exposure="1"
@@ -146,16 +148,15 @@
 				  'auto 80deg auto'}
 			max-camera-orbit={products[selectedModel].type == 'seat'
 				? // Seat
-				  'auto 90deg auto'
+				  'auto 94deg auto'
 				: // Light
 				  'auto 180deg auto'}
 			camera-target={products[selectedModel].type == 'seat' ? '' : 'auto 1.65m auto'}
 			interpolation-decay="200"
 			shadow-intensity="1"
-			interaction-prompt="none"
-			field-of-view="10deg"
-			min-field-of-view="10deg"
-			max-field-of-view="10deg"
+			field-of-view="20deg"
+			min-field-of-view="20deg"
+			max-field-of-view="20deg"
 		>
 			<button
 				slot="ar-button"
