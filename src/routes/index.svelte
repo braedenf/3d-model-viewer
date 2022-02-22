@@ -50,8 +50,6 @@
 		selectedModelType = 0;
 		selectedMaterial = 0;
 		modelMaterial = products[selectedModel].materials[selectedMaterial];
-
-		// changeCameraOrbit();
 	}
 
 	// Adds spaces between capital letters
@@ -59,11 +57,11 @@
 		return word.replace(/([A-Z])/g, ' $1').trim();
 	}
 
+	/* 
+		Wait for modelViewer to be loaded before using it
+	*/
 	let modelViewer; // Model viewer gets bound to model-viewer web component
 
-	/* 
-		Wait for modelViewer to be mounted
-	*/
 	let isARAvailable;
 	let qrModalOpen = false;
 
@@ -83,19 +81,43 @@
 		)
 		.toURL();
 
+	/* Setup model viewer after it has been loaded */
+
 	function setupModelViewer() {
 		// For some reason I need to crank the exposure here???
 		modelViewer.exposure = 0.7;
 
 		// Gets the ar-status and presents alt button if not available
-
 		if (modelViewer.canActivateAR) {
 			isARAvailable = true;
 		} else {
 			isARAvailable = false;
 		}
+	}
 
-		console.log(modelViewer.canActivateAR);
+	function zoomIn() {
+		let currentCameraPosition = modelViewer.getCameraOrbit();
+
+		let theta = radians_to_degrees(currentCameraPosition.theta);
+		let phi = radians_to_degrees(currentCameraPosition.phi);
+		let rad = currentCameraPosition.radius;
+
+		modelViewer.cameraOrbit = `${theta}deg ${phi}deg ${rad - 1}m`;
+	}
+
+	function zoomOut() {
+		let currentCameraPosition = modelViewer.getCameraOrbit();
+
+		let theta = radians_to_degrees(currentCameraPosition.theta);
+		let phi = radians_to_degrees(currentCameraPosition.phi);
+		let rad = currentCameraPosition.radius;
+
+		modelViewer.cameraOrbit = `${theta}deg ${phi}deg ${rad + 1}m`;
+	}
+
+	function radians_to_degrees(radians) {
+		var pi = Math.PI;
+		return radians * (180 / pi);
 	}
 </script>
 
@@ -125,7 +147,7 @@
 			on:load={setupModelViewer}
 			bind:this={modelViewer}
 			use:panSkybox
-			class="relative h-[30em] lg:h-full w-full bg-gray-200"
+			class="relative h-[30em] lg:h-full w-full bg-light-background"
 			poster={loadedPoster}
 			src={loadedModel}
 			loading="auto"
@@ -160,7 +182,7 @@
 		>
 			<button
 				slot="ar-button"
-				class="w-8 h-8 flex justify-center items-center absolute bottom-0 right-0 mb-4 mr-4"
+				class="w-8 h-8 flex justify-center items-center absolute top-0 right-0 mt-4 mr-4"
 			>
 				<img src="/ARicon.png" alt="AR icon" />
 			</button>
@@ -174,6 +196,15 @@
 				<img src="/ARicon.png" alt="AR icon" />
 			</button>
 		{/if}
+
+		<div class="flex gap-2 absolute bottom-4 right-6 z-10">
+			<button on:click={zoomOut} class="w-6"
+				><img src="./ZoomIcons/zoomOut.png" alt="zoom in level" /></button
+			>
+			<button on:click={zoomIn} class="w-6"
+				><img src="./ZoomIcons/zoomIn.png" alt="minus zoom level" /></button
+			>
+		</div>
 	</div>
 
 	<div class="flex flex-wrap gap-2 lg:order-last mr-4 items-center mb-10 mx-10">
