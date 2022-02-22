@@ -6,7 +6,11 @@ const config = {
 			headline: ['Sora', 'Helvetica', 'sans-serif'],
 			paragraph: ['Nunito Sans', 'Helvetica', 'sans-serif']
 		},
-		extend: {}
+		extend: {
+			colors: {
+				'light-background': '#EAEAEA'
+			}
+		}
 	},
 	plugins: [require('daisyui'), require('@tailwindcss/typography')],
 	daisyui: {
