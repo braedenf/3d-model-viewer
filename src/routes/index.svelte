@@ -184,7 +184,7 @@
 			interpolation-decay="200"
 			shadow-intensity="1"
 			field-of-view="20deg"
-			min-field-of-view="20deg"
+			min-field-of-view="10deg"
 			max-field-of-view="20deg"
 		>
 			<button
