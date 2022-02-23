@@ -89,7 +89,7 @@
 
 		/* Set Emissive factor higher for lights */
 		if (products[selectedModel].type === 'light') {
-			modelViewer.model.materials[0].setEmissiveFactor([3, 3, 3]);
+			modelViewer.model.materials[0].setEmissiveFactor([1.8, 1.8, 1.8]);
 		}
 
 		console.log(modelViewer.model.materials[0]);
