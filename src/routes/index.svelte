@@ -169,7 +169,7 @@
 			bounds="tight"
 			exposure="1"
 			camera-controls
-			camera-orbit={products[selectedModel].type == 'seat' ? '-40deg 82deg 12m' : '0 105deg 3m'}
+			camera-orbit={products[selectedModel].type == 'seat' ? '-40deg 82deg 12m' : '0 105deg 2m'}
 			min-camera-orbit={products[selectedModel].type == 'seat'
 				? // Seat
 				  'auto 5deg auto'
