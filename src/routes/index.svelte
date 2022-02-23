@@ -31,7 +31,7 @@
 	/* 
 		Selected model and selected model type for loading in from cloudinary dynamically
 	*/
-	let selectedModel = 0; // This is the product that gets loaded from cloudinary
+	let selectedModel = 2; // This is the product that gets loaded from cloudinary
 	let selectedModelType = 0; // This is the product variant
 	let selectedMaterial = 0; // This is the material
 	let modelMaterial = products[selectedModel].materials[selectedMaterial];
@@ -86,6 +86,13 @@
 	function setupModelViewer() {
 		// For some reason I need to crank the exposure here???
 		modelViewer.exposure = 0.7;
+
+		/* Set Emissive factor higher for lights */
+		if (products[selectedModel].type === 'light') {
+			modelViewer.model.materials[0].setEmissiveFactor([50, 50, 50]);
+		}
+
+		console.log(modelViewer.model.materials[0]);
 
 		// Gets the ar-status and presents alt button if not available
 		if (modelViewer.canActivateAR) {
