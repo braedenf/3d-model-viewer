@@ -92,8 +92,6 @@
 			modelViewer.model.materials[0].setEmissiveFactor([4, 4, 4]);
 		}
 
-		console.log(modelViewer.model.materials[0]);
-
 		// Gets the ar-status and presents alt button if not available
 		if (modelViewer.canActivateAR) {
 			isARAvailable = true;
@@ -169,7 +167,7 @@
 			bounds="tight"
 			exposure="1"
 			camera-controls
-			camera-orbit={products[selectedModel].type == 'seat' ? '-40deg 82deg 12m' : '0 105deg 2m'}
+			camera-orbit={products[selectedModel].type == 'seat' ? '-40deg 82deg 12m' : '0 105deg 3m'}
 			min-camera-orbit={products[selectedModel].type == 'seat'
 				? // Seat
 				  'auto 5deg auto'
@@ -185,7 +183,7 @@
 			shadow-intensity="1"
 			field-of-view="20deg"
 			min-field-of-view="10deg"
-			max-field-of-view="20deg"
+			max-field-of-view="10deg"
 		>
 			<button
 				slot="ar-button"
