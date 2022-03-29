@@ -20,6 +20,12 @@ export async function get() {
 					name: 'HexPendant',
 					variants: ['500', '750', '1000'],
 					materials: ['BrushedAluminium', 'Black', 'BrushedBrass', 'White']
+				},
+				{
+					type: 'light',
+					name: 'ParisonPendant',
+					variants: ['standard'],
+					materials: ['White', 'Black']
 				}
 				// {
 				// 	type: 'seat',
