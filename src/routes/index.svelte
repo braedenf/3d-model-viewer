@@ -88,7 +88,7 @@
 		modelViewer.exposure = 0.7;
 
 		/* Set Emissive factor higher for lights */
-		if (products[selectedModel].type === 'light') {
+		if (products[selectedModel].type === 'ceiling') {
 			modelViewer.model.materials[0].setEmissiveFactor([4, 4, 4]);
 		}
 
@@ -152,7 +152,7 @@
 			on:load={setupModelViewer}
 			bind:this={modelViewer}
 			use:panSkybox
-			class="relative h-[30em] lg:h-full w-full bg-light-background"
+			class="relative h-[30em] lg:h-full w-full bg-ceiling-background"
 			poster={loadedPoster}
 			src={loadedModel}
 			loading="auto"
@@ -167,23 +167,22 @@
 			bounds="tight"
 			exposure="1"
 			camera-controls
-			camera-orbit={products[selectedModel].type == 'seat' ? '-40deg 82deg 12m' : '0 105deg 3m'}
-			min-camera-orbit={products[selectedModel].type == 'seat'
+			camera-orbit={products[selectedModel].type == 'floor' ? '-40deg 82deg 12m' : '0 105deg 3m'}
+			min-camera-orbit={products[selectedModel].type == 'floor'
 				? // Seat
 				  'auto 5deg auto'
 				: // Light
 				  'auto 80deg auto'}
-			max-camera-orbit={products[selectedModel].type == 'seat'
+			max-camera-orbit={products[selectedModel].type == 'floor'
 				? // Seat
 				  'auto 94deg auto'
 				: // Light
 				  'auto 160deg auto'}
-			camera-target={products[selectedModel].type == 'seat' ? '' : 'auto 1.65m auto'}
 			interpolation-decay="200"
 			shadow-intensity="1"
-			field-of-view={products[selectedModel].type == 'seat' ? '20deg' : '20deg'}
-			min-field-of-view={products[selectedModel].type == 'seat' ? '20deg' : '10deg'}
-			max-field-of-view={products[selectedModel].type == 'seat' ? '20deg' : '10deg'}
+			field-of-view={products[selectedModel].type == 'floor' ? '20deg' : '20deg'}
+			min-field-of-view={products[selectedModel].type == 'floor' ? '20deg' : '10deg'}
+			max-field-of-view={products[selectedModel].type == 'floor' ? '20deg' : '10deg'}
 		>
 			<button
 				slot="ar-button"
