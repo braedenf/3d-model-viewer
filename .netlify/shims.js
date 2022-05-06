@@ -4840,7 +4840,7 @@ class Body {
 			return formData;
 		}
 
-		const {toFormData} = await import('./multipart-parser-781607e4.js');
+		const {toFormData} = await import('./multipart-parser-5faf185a.js');
 		return toFormData(this.body, ct);
 	}
 
@@ -6490,7 +6490,7 @@ function fixResponseChunkedTransferBadEnding(request, errorCallback) {
 }
 
 // exported for dev/preview and node environments
-function __fetch_polyfill() {
+function installFetch() {
 	Object.defineProperties(globalThis, {
 		fetch: {
 			enumerable: true,
@@ -6515,6 +6515,6 @@ function __fetch_polyfill() {
 	});
 }
 
-__fetch_polyfill();
+installFetch();
 
 export { FormData as F, File as a };

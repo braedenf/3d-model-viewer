@@ -1,11 +1,11 @@
-import { init } from '../handler.js';
+import { init } from '../serverless.js';
 
 export const handler = init({
 	appDir: "_app",
-	assets: new Set(["favicon.png","model-viewer/model-viewer.min.js","model-viewer/model-viewer.min.js.map","whiteroom2Windows_512.hdr"]),
+	assets: new Set(["ARicon.png","ZoomIcons/zoomIn.png","ZoomIcons/zoomOut.png","favicon.png","model-viewer/dist","whiteroom2Windows_512.hdr"]),
+	mimeTypes: {".png":"image/png"},
 	_: {
-		mime: {".png":"image/png",".js":"application/javascript",".map":"application/json"},
-		entry: {"file":"start-6685b134.js","js":["start-6685b134.js","chunks/vendor-036923b7.js"],"css":[]},
+		entry: {"file":"start-ea14d056.js","js":["start-ea14d056.js","chunks/index-c7c60a19.js"],"css":[]},
 		nodes: [
 			() => import('../server/nodes/0.js'),
 			() => import('../server/nodes/1.js'),
@@ -14,8 +14,10 @@ export const handler = init({
 		routes: [
 			{
 				type: 'page',
+				id: "",
 				pattern: /^\/$/,
-				params: null,
+				names: [],
+				types: [],
 				path: "/",
 				shadow: null,
 				a: [0,2],
@@ -23,10 +25,16 @@ export const handler = init({
 			},
 			{
 				type: 'endpoint',
+				id: "products.json",
 				pattern: /^\/products\.json$/,
-				params: null,
+				names: [],
+				types: [],
 				load: () => import('../server/entries/endpoints/products.json.js')
 			}
-		]
+		],
+		matchers: async () => {
+			
+			return {  };
+		}
 	}
 });

@@ -1,9 +1,9 @@
 export const manifest = {
 	appDir: "_app",
-	assets: new Set(["favicon.png","model-viewer/model-viewer.min.js","model-viewer/model-viewer.min.js.map","whiteroom2Windows_512.hdr"]),
+	assets: new Set(["ARicon.png","ZoomIcons/zoomIn.png","ZoomIcons/zoomOut.png","favicon.png","model-viewer/dist","whiteroom2Windows_512.hdr"]),
+	mimeTypes: {".png":"image/png"},
 	_: {
-		mime: {".png":"image/png",".js":"application/javascript",".map":"application/json"},
-		entry: {"file":"start-6685b134.js","js":["start-6685b134.js","chunks/vendor-036923b7.js"],"css":[]},
+		entry: {"file":"start-ea14d056.js","js":["start-ea14d056.js","chunks/index-c7c60a19.js"],"css":[]},
 		nodes: [
 			() => import('./nodes/0.js'),
 			() => import('./nodes/1.js'),
@@ -12,8 +12,10 @@ export const manifest = {
 		routes: [
 			{
 				type: 'page',
+				id: "",
 				pattern: /^\/$/,
-				params: null,
+				names: [],
+				types: [],
 				path: "/",
 				shadow: null,
 				a: [0,2],
@@ -21,10 +23,16 @@ export const manifest = {
 			},
 			{
 				type: 'endpoint',
+				id: "products.json",
 				pattern: /^\/products\.json$/,
-				params: null,
+				names: [],
+				types: [],
 				load: () => import('./entries/endpoints/products.json.js')
 			}
-		]
+		],
+		matchers: async () => {
+			
+			return {  };
+		}
 	}
 };

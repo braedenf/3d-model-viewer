@@ -69,6 +69,13 @@
 		Update the model to load reactivly when any of the customisation options change
 	*/
 
+	$: iosSrc = cloudinary
+		.image(
+			`${products[selectedModel].name}/${products[selectedModel].variants[selectedModelType]}/${products[selectedModel].name}_${products[selectedModel].variants[selectedModelType]}_${modelMaterial}`,
+			{ fetch_format: 'usdz' }
+		)
+		.toURL();
+
 	$: loadedModel = cloudinary
 		.image(
 			`${products[selectedModel].name}/${products[selectedModel].variants[selectedModelType]}/${products[selectedModel].name}_${products[selectedModel].variants[selectedModelType]}_${modelMaterial}`
@@ -155,6 +162,7 @@
 			class="relative h-[30em] lg:h-full w-full bg-ceiling-background"
 			poster={loadedPoster}
 			src={loadedModel}
+			ios-src={iosSrc}
 			loading="auto"
 			alt="3D Model Viewer"
 			ar

@@ -4,37 +4,40 @@ async function get() {
     body: {
       products: [
         {
-          type: "seat",
+          type: "floor",
           name: "KashmirChair",
-          variants: ["Hallingdale65ByKvadrat_0190"],
-          materials: ["Black", "0110"]
+          variants: ["Hallingdale65ByKvadrat"],
+          materials: ["0190", "0110", "0227", "0180", "0100", "0143"]
         },
         {
-          type: "seat",
+          type: "floor",
           name: "Carousel",
-          variants: ["HighBack", "MedBack", "LowBack"],
-          materials: [
-            "MaharamMeld-Gloss",
-            "MaharamMeld-Crater",
-            "MaharamMeld-Antler",
-            "MaharamMeld-Bare",
-            "MaharamMeld-Quill",
-            "MaharamMeld-Panda",
-            "MaharamMeld-Kiss",
-            "MaharamMeld-SeaShell"
-          ]
+          variants: ["HighBack_MaharamMeld", "MedBack_MaharamMeld", "LowBack_MaharamMeld"],
+          materials: ["Gloss", "Crater", "Antler", "Bare", "Quill", "Panda", "Kiss", "SeaShell"]
         },
         {
-          type: "light",
+          type: "ceiling",
           name: "HexPendant",
           variants: ["500", "750", "1000"],
-          materials: ["Aluminium", "Black", "Brass", "White"]
+          materials: ["BrushedAluminium", "Black", "BrushedBrass", "White"]
         },
         {
-          type: "seat",
-          name: "Parallel",
-          variants: ["Standard"],
-          materials: ["Base"]
+          type: "ceiling",
+          name: "ParisonPendant",
+          variants: ["standard"],
+          materials: ["White", "Black"]
+        },
+        {
+          type: "floor",
+          name: "Circus",
+          variants: ["FloorLight"],
+          materials: ["BrushedBrass"]
+        },
+        {
+          type: "ceiling",
+          name: "Circus500Pendant",
+          variants: ["FiveBrass", "FourBrass", "SixBrass", "ThreeBrass", "TwoBrass"],
+          materials: ["BrushedBrass"]
         }
       ]
     }
