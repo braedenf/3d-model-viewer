@@ -71,14 +71,14 @@
 
 	$: iosSrc = cloudinary
 		.image(
-			`${products[selectedModel].name}/${products[selectedModel].variants[selectedModelType]}/${products[selectedModel].name}_${products[selectedModel].variants[selectedModelType]}_${modelMaterial}`,
+			`${products[selectedModel].name}/${products[selectedModel].variants[selectedModelType]}/${products[selectedModel].name}_${products[selectedModel].variants[selectedModelType]}_${modelMaterial}.glb`,
 			{ fetch_format: 'usdz' }
 		)
 		.toURL();
 
 	$: loadedModel = cloudinary
 		.image(
-			`${products[selectedModel].name}/${products[selectedModel].variants[selectedModelType]}/${products[selectedModel].name}_${products[selectedModel].variants[selectedModelType]}_${modelMaterial}`
+			`${products[selectedModel].name}/${products[selectedModel].variants[selectedModelType]}/${products[selectedModel].name}_${products[selectedModel].variants[selectedModelType]}_${modelMaterial}.glb`
 		)
 		.toURL();
 
@@ -168,6 +168,7 @@
 			ar
 			ar-modes="webxr scene-viewer"
 			ar-status
+			scale="fixed"
 			auto-rotate
 			rotation-per-second="1deg"
 			interaction-prompt="none"
