@@ -15,8 +15,9 @@
 	import { panSkybox } from '$lib/pan-skybox';
 	import QrCode from '$lib/qrcode.svelte';
 	import Modal from '$lib/modal.svelte';
-	import { Delivery, format } from '@cloudinary/url-gen/actions/delivery';
-	import { Format, usdz } from '@cloudinary/url-gen/qualifiers/format';
+	import { format } from '@cloudinary/url-gen/actions/delivery';
+	import { usdz } from '@cloudinary/url-gen/qualifiers/format';
+	import { browser } from '$app/env';
 
 	/* 
 		Product Data is loaded from a local endpoint in json format
@@ -317,4 +318,10 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div class="h-screen container mx-auto">
+	<h2 class="text-2xl font-bold">Testing Cloudinary AR viewer</h2>
+	{#if browser}
+		<ar-3d-viewer cloud="dbfqxpc2p" models="KashmirChair_Hallingdale65ByKvadrat_0100" />
+	{/if}
 </div>
