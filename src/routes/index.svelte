@@ -166,7 +166,7 @@
 			loading="auto"
 			alt="3D Model Viewer"
 			ar
-			ar-modes="webxr scene-viewer quick-look"
+			ar-modes="webxr scene-viewer"
 			ar-status
 			auto-rotate
 			rotation-per-second="1deg"
