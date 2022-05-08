@@ -11,10 +11,12 @@
 </script>
 
 <script>
-	import { Cloudinary } from '@cloudinary/url-gen';
+	import { CloudConfig, Cloudinary, CloudinaryImage, URLConfig } from '@cloudinary/url-gen';
 	import { panSkybox } from '$lib/pan-skybox';
 	import QrCode from '$lib/qrcode.svelte';
 	import Modal from '$lib/modal.svelte';
+	import { Delivery, format } from '@cloudinary/url-gen/actions/delivery';
+	import { Format, usdz } from '@cloudinary/url-gen/qualifiers/format';
 
 	/* 
 		Product Data is loaded from a local endpoint in json format
@@ -27,6 +29,9 @@
 			cloudName: 'dbfqxpc2p'
 		}
 	});
+
+	const cloudConfig = new CloudConfig({ cloudName: 'dbfqxpc2p' });
+	const urlConfig = new URLConfig({ secure: true });
 
 	/* 
 		Selected model and selected model type for loading in from cloudinary dynamically
@@ -69,16 +74,17 @@
 		Update the model to load reactivly when any of the customisation options change
 	*/
 
-	$: iosSrc = cloudinary
-		.image(
-			`${products[selectedModel].name}/${products[selectedModel].variants[selectedModelType]}/${products[selectedModel].name}_${products[selectedModel].variants[selectedModelType]}_${modelMaterial}.glb`,
-			{ fetch_format: 'usdz' }
-		)
+	$: iosSrc = new CloudinaryImage(
+		`${products[selectedModel].name}/${products[selectedModel].variants[selectedModelType]}/${products[selectedModel].name}_${products[selectedModel].variants[selectedModelType]}_${modelMaterial}`,
+		cloudConfig,
+		urlConfig
+	)
+		.delivery(format(usdz()))
 		.toURL();
 
 	$: loadedModel = cloudinary
 		.image(
-			`${products[selectedModel].name}/${products[selectedModel].variants[selectedModelType]}/${products[selectedModel].name}_${products[selectedModel].variants[selectedModelType]}_${modelMaterial}.glb`
+			`${products[selectedModel].name}/${products[selectedModel].variants[selectedModelType]}/${products[selectedModel].name}_${products[selectedModel].variants[selectedModelType]}_${modelMaterial}`
 		)
 		.toURL();
 
